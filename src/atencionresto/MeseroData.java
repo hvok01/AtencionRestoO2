@@ -16,16 +16,17 @@ public class MeseroData {
         connection = conexion.getConexion();
     }
     
-    public void guardarMesero (String nombre,int dni, boolean estado) {
+    public void guardarMesero (Mesero mesero) {
         
         PreparedStatement ps;
         
         try {
-            ps = connection.prepareStatement("INSERT INTO mesero (nombre_mesero ,dni_mesero ,estado)"
-                    + " VALUES ( ? , ? , ? );");
-            ps.setString(1, nombre);
-            ps.setInt(2, dni);
-            ps.setBoolean(3, estado);
+            ps = connection.prepareStatement("INSERT INTO mesero (id_mesero ,nombre_mesero ,dni_mesero ,estado)"
+                    + " VALUES ( ? , ? , ? , ? );");
+            ps.setInt(1, mesero.getId_mesero());
+            ps.setString(2, mesero.getNombre_mesero());
+            ps.setInt(3, mesero.getDni_mesero());
+            ps.setBoolean(4, mesero.getEstado());
             ps.executeUpdate();
             ps.close();
             System.out.println("el mesero fue agregado exitosamente.");
@@ -33,17 +34,17 @@ public class MeseroData {
             Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void borrarMesero (String nombre) {
+   
+    public void borrarMesero (Mesero mesero) {
         
         PreparedStatement ps;
         
         try {
             ps = connection.prepareStatement("DELETE FROM mesero WHERE nombre_mesero = ( ? );");
-            ps.setString(1, nombre);
+            ps.setString(1, mesero.getNombre_mesero());
             ps.executeUpdate();
             ps.close();
-            System.out.println("El mesero " + nombre + " fue eliminado de la base de datos");
+            System.out.println("El mesero " + mesero.getNombre_mesero() + " fue eliminado de la base de datos");
         } catch (SQLException ex) {
             Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
         }

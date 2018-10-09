@@ -3,17 +3,24 @@ package atencionresto;
 
 
 public class Mesero {
-    private int id_mesero;
+    private int id_mesero=-2;
     private String nombre_mesero;
     private int dni_mesero;
     private boolean estado;
-    
-    public Mesero() {
-        this.id_mesero = id_mesero;
+
+    public Mesero( String nombre_mesero, int dni_mesero, boolean estado) {
+        
         this.nombre_mesero = nombre_mesero;
         this.dni_mesero = dni_mesero;
         this.estado = estado;
     }
+
+    public Mesero() {
+    }
+
+
+    
+   
 
     public int getId_mesero() {
         return id_mesero;
