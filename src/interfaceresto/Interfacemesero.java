@@ -8,6 +8,9 @@ package interfaceresto;
 import atencionresto.Conexion;
 import atencionresto.Mesero;
 import atencionresto.MeseroData;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
@@ -85,6 +88,7 @@ private Conexion conexion;
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,9 +103,27 @@ private Conexion conexion;
 
         nombre.setText("NOMBRE:");
 
+        nombre_mesero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombre_meseroActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("DNI:");
 
+        dni_mesero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dni_meseroActionPerformed(evt);
+            }
+        });
+
         jLabel3.setText("ID:");
+
+        id_mesero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                id_meseroActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("ESTADO ACTIVO:");
 
@@ -128,6 +150,13 @@ private Conexion conexion;
             }
         });
 
+        jButton5.setText("Guardar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,7 +179,7 @@ private Conexion conexion;
                             .addComponent(id_mesero))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
@@ -161,8 +190,10 @@ private Conexion conexion;
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)))
-                .addGap(74, 74, 74))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,7 +221,8 @@ private Conexion conexion;
                     .addComponent(jButton2)
                     .addComponent(jButton1)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(jButton5))
                 .addGap(63, 63, 63))
         );
 
@@ -198,13 +230,13 @@ private Conexion conexion;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-Conexion cc= new Conexion();
+/*Conexion cc= new Conexion();
     try {
         cc.getConexion();
          JOptionPane.showMessageDialog(null, "conectado");
     } catch (ClassNotFoundException ex) {
         Logger.getLogger(Interfacemesero.class.getName()).log(Level.SEVERE, null, ex);
-    }
+    }*/  
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -213,49 +245,51 @@ id_mesero.requestFocus();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-this.dispose();
+this.dispose();//para salir del jframe
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
  bloquear();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void nombre_meseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre_meseroActionPerformed
+nombre_mesero.transferFocus();//para que al hacer Enter pase al siguiente cuadro de texto       // TODO add your handling code here:
+    }//GEN-LAST:event_nombre_meseroActionPerformed
+
+    private void dni_meseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dni_meseroActionPerformed
+dni_mesero.transferFocus();        // TODO add your handling code here:
+    }//GEN-LAST:event_dni_meseroActionPerformed
+
+    private void id_meseroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_meseroActionPerformed
+id_mesero.transferFocus();        // TODO add your handling code here:
+    }//GEN-LAST:event_id_meseroActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+     Conexion cc= new Conexion();
+    try {
+        cc.getConexion();
+         JOptionPane.showMessageDialog(null, "conectado");
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(Interfacemesero.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+   
+        String id=id_mesero.getText();
+         String nombre=nombre_mesero.getText();
+         String dni=dni_mesero.getText();
+        boolean activo=estado_activo.isSelected();
+        
+        Mesero mesero=new Mesero(nombre,dni,activo);
+        meseroData.guardarMesero(mesero);
+        
+        id_mesero.setText(mesero.getId()+"");
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Interfacemesero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Interfacemesero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Interfacemesero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Interfacemesero.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Interfacemesero().setVisible(true);
-            }
-        });
-    }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField dni_mesero;
@@ -265,6 +299,7 @@ this.dispose();
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

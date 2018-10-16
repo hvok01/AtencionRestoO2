@@ -10,5 +10,31 @@ package atencionresto;
  * @author Administrador
  */
 public class PedidoDetalle {
+    private int idPedidoDetalle;
+    private int cantidadPedidos;
+
+    public PedidoDetalle(int idPedidoDetalle, int cantidadPedidos) {
+        this.idPedidoDetalle = idPedidoDetalle;
+        this.cantidadPedidos = cantidadPedidos;
+    }
+
+    public PedidoDetalle() {
+    }
+
+    public int getIdPedidoDetalle() {
+        return idPedidoDetalle;
+    }
+
+    public void setIdPedidoDetalle(int idPedidoDetalle) {
+        this.idPedidoDetalle = idPedidoDetalle;
+    }
+
+    public int getCantidadPedidos() {
+        return cantidadPedidos;
+    }
+
+    public void setCantidadPedidos(int cantidadPedidos) {
+        this.cantidadPedidos = cantidadPedidos;
+    }
     
 }

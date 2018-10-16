@@ -14,9 +14,9 @@ public class AtencionResto {
             conexion = new Conexion("jdbc:mysql://localhost/resto", "root", "");
             
            // JOptionPane.showMessageDialog(null, "conectado");
-            MeseroData mesero = new MeseroData(conexion);
-            Mesero nm;
-            nm = new Mesero("nombre", 22111333, true);
+           // MeseroData mesero = new MeseroData(conexion);
+            //Mesero nm;
+            //nm = new Mesero("nombre", 22111333, true);
           
             // metodos que se pueden hacer
             
@@ -31,8 +31,21 @@ public class AtencionResto {
             
             //buscar mesero busca un mesero por el id(se puede cambiar para filtrar por otra cosa)
             // 3 es igual al id del mesero que busca
-            mesero.buscarMesero(-2);
+            //mesero.buscarMesero(-2);
             
+            
+          // CLASE MESA
+          
+            MesaData mesa = new MesaData(conexion);
+            Mesa m;
+            m = new Mesa(3, 221,4, true);
+          
+            // metodos que se pueden hacer
+            
+            //guardar mesa, agrega a la base de datos una mesa
+           mesa.guardarMesa(m);
+            
+           
         } catch (ClassNotFoundException e) {
             System.out.println("Error al instanciar la clase conexion: " + e.getMessage());
         }
