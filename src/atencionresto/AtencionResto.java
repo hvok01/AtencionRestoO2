@@ -12,7 +12,7 @@ public class AtencionResto {
         
         try {
             conexion = new Conexion("jdbc:mysql://localhost/resto", "root", "");
-            System.out.println("conectado");
+            
            // JOptionPane.showMessageDialog(null, "conectado");
             MeseroData mesero = new MeseroData(conexion);
             Mesero nm;
