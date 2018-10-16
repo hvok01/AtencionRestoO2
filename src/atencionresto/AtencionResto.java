@@ -1,6 +1,8 @@
 
 package atencionresto;
 
+import javax.swing.JOptionPane;
+
 
 public class AtencionResto {
 
@@ -10,6 +12,8 @@ public class AtencionResto {
         
         try {
             conexion = new Conexion("jdbc:mysql://localhost/resto", "root", "");
+            System.out.println("conectado");
+           // JOptionPane.showMessageDialog(null, "conectado");
             MeseroData mesero = new MeseroData(conexion);
             Mesero nm;
             nm = new Mesero("nombre", 22111333, true);

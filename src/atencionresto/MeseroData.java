@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 public class MeseroData {
     private Connection connection = null;
     
-    public MeseroData (Conexion conexion) {
+    public MeseroData (Conexion conexion) throws ClassNotFoundException {
         connection = conexion.getConexion();
     }
     
