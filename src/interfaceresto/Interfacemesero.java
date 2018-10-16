@@ -26,6 +26,9 @@ private Conexion conexion;
      */
     public Interfacemesero() {
         initComponents();
+        
+        // base de datos incorrecta debe ser: resto..
+        
        try {
         conexion = new Conexion("jdbc:mysql://localhost/universidad2", "root", "");
         meseroData = new MeseroData(conexion);

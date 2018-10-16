@@ -1,25 +1,30 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package atencionresto;
 
-/**
- *
- * @author Administrador
- */
+
 public class Mesa {
     private int idMesa;
     private int numMesa;
     private int capacidad;
-    private int estadoMesa;
+    private boolean estado;
 
-    public Mesa(int idMesa, int numMesa, int capacidad, int estadoMesa) {
+    public Mesa(int idMesa, int numMesa, int capacidad, boolean estado) {
         this.idMesa = idMesa;
         this.numMesa = numMesa;
         this.capacidad = capacidad;
-        this.estadoMesa = estadoMesa;
+        this.estado = estado;
+    }
+
+    public Mesa(int numMesa, int capacidad, boolean estado) {
+        this.numMesa = numMesa;
+        this.capacidad = capacidad;
+        this.estado = estado;
     }
 
     public Mesa() {
@@ -29,8 +34,8 @@ public class Mesa {
         return idMesa;
     }
 
-    public void setIdMesa(int idMesa) {
-        this.idMesa = idMesa;
+    public void setIdamesa(int idMesa) {
+        this.idMesa= idMesa;
     }
 
     public int getNumMesa() {
@@ -49,13 +54,14 @@ public class Mesa {
         this.capacidad = capacidad;
     }
 
-    public int getEstadoMesa() {
-        return estadoMesa;
+    public boolean isEstado() {
+        return estado;
     }
 
-    public void setEstadoMesa(int estadoMesa) {
-        this.estadoMesa = estadoMesa;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     
 }
+
