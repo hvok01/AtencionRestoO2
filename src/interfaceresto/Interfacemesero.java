@@ -278,7 +278,7 @@ id_mesero.transferFocus();        // TODO add your handling code here:
          String dni=dni_mesero.getText();
         boolean activo=estado_activo.isSelected();
         
-        Mesero mesero=new Mesero(nombre,dni,activo);
+        Mesero mesero=new Mesero(nombre,dni,activo);    //Hacer cast a dni para que sea un int
         meseroData.guardarMesero(mesero);
         
         id_mesero.setText(mesero.getId()+"");
