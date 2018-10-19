@@ -36,4 +36,8 @@ public class Conexion {
         }
         return null;
     }
+
+    public void setEnabled(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -13,22 +13,29 @@ public class Mesero {
     public Mesero() {
            
     }
-
+ public Mesero(String nombre_mesero, String password, int dni_mesero, boolean estado) {
+        this.nombre_mesero = nombre_mesero;
+        this.password = password;
+        this.dni_mesero = dni_mesero;
+        this.estado = estado;
+    }
     public Mesero(int id_mesero, String nombre_mesero, String password, int dni_mesero, boolean estado) {
-        this.id_mesero = -2;
+        this.id_mesero = 3;
         this.nombre_mesero = nombre_mesero;
         this.password = password;
         this.dni_mesero = dni_mesero;
         this.estado = estado;
     }
+
+    public Mesero( String nombre_mesero, int dni_mesero, boolean estado){
+        this.nombre_mesero = nombre_mesero;
       
-    public Mesero(String nombre_mesero, String password, int dni_mesero, boolean estado) {
-        
-        this.nombre_mesero = nombre_mesero;
-        this.password = password;
         this.dni_mesero = dni_mesero;
         this.estado = estado;
     }
+    
+      
+   
 
     public String getPassword() {
         return password;

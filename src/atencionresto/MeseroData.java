@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,15 +23,23 @@ public class MeseroData {
         
         try {
             ps = connection.prepareStatement("INSERT INTO mesero (nombre_mesero, password, dni_mesero, estado)"
-                    + " VALUES ( ? , ? , ? , 0 );");
+                    + " VALUES ( ? , ? , ? , ? );");
             ps.setString(1, mesero.getNombre_mesero());
             ps.setString(2, mesero.getPassword());
             ps.setInt(3, mesero.getDni_mesero());
             ps.executeUpdate();
+            
+            ResultSet rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                mesero.setId_mesero(rs.getInt(1));
+            } else {
+                System.out.println("No se pudo obtener el id luego de insertar el mesero");
+            }
             ps.close();
-            System.out.println("el mesero fue agregado exitosamente.");
+    
         } catch (SQLException ex) {
-            Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al insertar el mesero: " + ex.getMessage());
         }
     }
    
@@ -49,23 +58,22 @@ public class MeseroData {
         }
     }
     
-    public void actualizarMesero (String nombre,int dni,boolean estado,int id_mesero) {
-        
-        PreparedStatement ps;
-        
+    public void actualizarMesero (Mesero mesero) { 
         try {
-            ps = connection.prepareStatement("UPDATE mesero SET nombre_mesero = ( ? ), dni_mesero = ( ? ),"
+            String sql = "UPDATE mesero SET nombre_mesero = ( ? ), dni_mesero = ( ? ),"
                     + " estado = ( ? )"
-                    + " WHERE id_mesero = ( ? );");
-            ps.setString(1, nombre);
-            ps.setInt(2, dni);
-            ps.setBoolean(3, estado);
-            ps.setInt(4, id_mesero);
-            ps.executeUpdate();
-            ps.close();
-            System.out.println("el mesero " + nombre + " actualizo sus datos");
+                    + " WHERE id_mesero = ( ? );";
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, mesero.getNombre_mesero());
+            
+            statement.setInt(2, mesero.getDni_mesero());
+            statement.setBoolean(3, mesero.getEstado());
+            statement.setInt(4, mesero.getId_mesero());
+            statement.executeUpdate();
+            statement.close();
+    
         } catch (SQLException ex) {
-            Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al actualizar el mesero: " + ex.getMessage());
         }
     }
     
