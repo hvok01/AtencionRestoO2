@@ -7,9 +7,9 @@ package atencionresto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.Statement;
 
 /**
  *
@@ -17,30 +17,36 @@ import java.util.logging.Logger;
  */
 public class MesaData {
  private Connection connection = null;
+ 
     public MesaData() {
     }
-    
-    public MesaData (Conexion conexion) throws ClassNotFoundException {
+
+   public MesaData (Conexion conexion) throws ClassNotFoundException {
         connection = conexion.getConexion();
     }
     
-    public void guardarMesa (Mesa mesa) {
-        
-        PreparedStatement ps;
-        
-        try {
-            ps = connection.prepareStatement("INSERT INTO mesero (id_mesa ,num_mesa ,capacidad ,estado)"
-                    + " VALUES ( ? , ? , ? , ? );");
-            ps.setInt(1, mesa.getIdMesa());
-            ps.setInt(2, mesa.getNumMesa());
-            ps.setInt(3, mesa.getCapacidad());
-             ps.setBoolean(4, mesa.isEstado());
-            ps.executeUpdate();
-            ps.close();
-            System.out.println("la mesa fue agregada exitosamente.");
+    public void guardarMesa (Mesa mesa) {       
+       try {
+            
+            String sql = "INSERT INTO alumno (num_mesa, capacidad, activo) VALUES ( ? , ? , ? );";
+
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, mesa.getNumMesa());
+            statement.setInt(2, mesa.getCapacidad());
+            statement.setBoolean(3, mesa.isEstado());
+            
+            statement.executeUpdate();
+            
+            ResultSet rs = statement.getGeneratedKeys();//obtener el id del alumno
+
+            if (rs.next()) {
+                mesa.setIdamesa(rs.getInt(1));
+            } else {
+                System.out.println("No se pudo obtener el id luego de insertar un alumno");
+            }
+            statement.close();
+    
         } catch (SQLException ex) {
-            Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al insertar una mesa: " + ex.getMessage());
         }
-    }
-   
-}
+    }}

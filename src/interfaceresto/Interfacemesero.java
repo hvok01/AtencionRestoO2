@@ -283,7 +283,7 @@ id_mesero.transferFocus();        // TODO add your handling code here:
         
         
         String id=id_mesero.getText();
-        String nombre=nombre_mesero.getText();
+        String nom=nombre_mesero.getText();
         String dni= dni_mesero.getText();
         boolean activo=estado_activo.isSelected();
         

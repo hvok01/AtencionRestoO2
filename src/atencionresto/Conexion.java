@@ -25,6 +25,7 @@ public class Conexion {
       
     }
     
+   
     public Connection getConexion() throws ClassNotFoundException {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
@@ -34,6 +35,5 @@ public class Conexion {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-        
     }
 }

@@ -12,7 +12,7 @@ public class AtencionResto {
         
         try {
             conexion = new Conexion("jdbc:mysql://localhost/resto", "root", "");
-            
+            System.out.println("conectado");
            // JOptionPane.showMessageDialog(null, "conectado");
            // MeseroData mesero = new MeseroData(conexion);
             //Mesero nm;
@@ -38,12 +38,12 @@ public class AtencionResto {
           
             MesaData mesa = new MesaData(conexion);
             Mesa m;
-            m = new Mesa(3, 221,4, true);
+            m = new Mesa(221,4, true);
           
             // metodos que se pueden hacer
             
             //guardar mesa, agrega a la base de datos una mesa
-           mesa.guardarMesa(m);
+          mesa.guardarMesa(m);
             
            
         } catch (ClassNotFoundException e) {
