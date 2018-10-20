@@ -21,12 +21,11 @@ public class MeseroData {
         PreparedStatement ps;
         
         try {
-            ps = connection.prepareStatement("INSERT INTO mesero (id_mesero ,nombre_mesero ,dni_mesero ,estado)"
-                    + " VALUES ( ? , ? , ? , ? );");
-            ps.setInt(1, mesero.getId_mesero());
-            ps.setString(2, mesero.getNombre_mesero());
+            ps = connection.prepareStatement("INSERT INTO mesero (nombre_mesero, password, dni_mesero, estado)"
+                    + " VALUES ( ? , ? , ? , 0 );");
+            ps.setString(1, mesero.getNombre_mesero());
+            ps.setString(2, mesero.getPassword());
             ps.setInt(3, mesero.getDni_mesero());
-            ps.setBoolean(4, mesero.getEstado());
             ps.executeUpdate();
             ps.close();
             System.out.println("el mesero fue agregado exitosamente.");
@@ -70,23 +69,18 @@ public class MeseroData {
         }
     }
     
-    public void buscarMesero (int id) {
+    public void logearMesero (String nombre,String contraseña) {
         
         PreparedStatement ps;
         
         try {
-            ps = connection.prepareStatement("SELECT * FROM `mesero` WHERE id_mesero = ( ? );");
-           // ps.setString(0, id_materia);
-            ps.setInt(1, id);
+            ps = connection.prepareStatement("SELECT nombre_mesero FROM `mesero` "
+                    + " WHERE nombre_mesero = ( ? ) AND password = ( ? );");
+            
+            ps.setString(1,nombre);
+            ps.setString(2, contraseña);
             ps.executeUpdate();
             ResultSet resultSet = ps.executeQuery();
-            Mesero nm;
-            while(resultSet.next()){
-                nm = new Mesero();
-                nm.setNombre_mesero(resultSet.getString("nombre_mesero"));
-                System.out.println("usted seleccion por el id el mesero " + nm.getNombre_mesero());
-               // JOptionPane .showMessageDialog(null, "el alumno es: " + nm.getNombre_mesero());
-            } 
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
