@@ -27,7 +27,20 @@ public class PedidoDetalleData {
             ps.setInt(1, pedidoDetalle.getCantidadPedidos());
             ps.executeUpdate();
             ps.close();
-            System.out.println("el pedido en detalle fue agregado exitosamente.");
+            System.out.println("el pedido fue agregado exitosamente.");
+        } catch (SQLException ex) {
+            Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void borrarPedido(PedidoDetalle pedidoDetalle){
+         PreparedStatement ps;
+        
+        try {
+            ps = connection.prepareStatement("DELETE FROM pedido_detalle WHERE id_pedido_detalle = ( ? );");
+            ps.setInt(1, pedidoDetalle.getIdPedidoDetalle());
+            ps.executeUpdate();
+            ps.close();
+            System.out.println("El pedido " + pedidoDetalle.getIdPedidoDetalle() + " fue eliminado de la base de datos");
         } catch (SQLException ex) {
             Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -24,9 +24,9 @@ public class MeseroData {
         try {
             ps = connection.prepareStatement("INSERT INTO mesero (nombre_mesero, password, dni_mesero, estado)"
                     + " VALUES ( ? , ? , ? , ? );");
-            ps.setString(1, mesero.getNombre_mesero());
-            ps.setString(2, mesero.getPassword());
+            ps.setString(2, mesero.getNombre_mesero());
             ps.setInt(3, mesero.getDni_mesero());
+            ps.setBoolean(4, mesero.getEstado());
             ps.executeUpdate();
             
             ResultSet rs = ps.getGeneratedKeys();
@@ -65,7 +65,6 @@ public class MeseroData {
                     + " WHERE id_mesero = ( ? );";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, mesero.getNombre_mesero());
-            
             statement.setInt(2, mesero.getDni_mesero());
             statement.setBoolean(3, mesero.getEstado());
             statement.setInt(4, mesero.getId_mesero());

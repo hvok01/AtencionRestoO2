@@ -5,7 +5,7 @@ package atencionresto;
 public class Mesero {
     private int id_mesero;
     private String nombre_mesero;
-    private String password;
+ 
     private int dni_mesero;
     private boolean estado;
         
@@ -13,37 +13,18 @@ public class Mesero {
     public Mesero() {
            
     }
- public Mesero(String nombre_mesero, String password, int dni_mesero, boolean estado) {
+ public Mesero(String nombre_mesero, int dni_mesero, boolean estado) {
         this.nombre_mesero = nombre_mesero;
-        this.password = password;
         this.dni_mesero = dni_mesero;
         this.estado = estado;
     }
-    public Mesero(int id_mesero, String nombre_mesero, String password, int dni_mesero, boolean estado) {
+    public Mesero(int id_mesero, String nombre_mesero, int dni_mesero, boolean estado) {
         this.id_mesero = 3;
         this.nombre_mesero = nombre_mesero;
-        this.password = password;
         this.dni_mesero = dni_mesero;
         this.estado = estado;
     }
 
-    public Mesero( String nombre_mesero, int dni_mesero, boolean estado){
-        this.nombre_mesero = nombre_mesero;
-      
-        this.dni_mesero = dni_mesero;
-        this.estado = estado;
-    }
-    
-      
-   
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public int getId_mesero() {
         return id_mesero;
