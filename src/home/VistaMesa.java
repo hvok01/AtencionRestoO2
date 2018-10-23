@@ -227,18 +227,17 @@ private Mesa mesa;
     // End of variables declaration//GEN-END:variables
 int filas;//variable global
   public void cargarDatos(){
+    
     try {
         borraFilasTabla();
    
         //Llenar filas
-   
-        MesaData cd =new MesaData(conexion);
-        Mesa seleccionado=(Mesa)jComboBox1.getSelectedItem();
-        listaMesa = (ArrayList)cd.obtenerMesas(seleccionado.getNumMesa());
         
-        for(Mesa m:listaMesa){
+        MesaData pd = new MesaData(conexion);
+        listaMesa = (ArrayList) pd.obtenerMesas();
         
-            modelo.addRow(new Object[]{m.getIdMesa(),m.getNumMesa(),m.getCapacidad(),m.estado()});
+        for (Mesa p : listaMesa ) {
+            modelo.addRow(new Object[]{p.getIdMesa() ,p.getNumMesa(),p.getCapacidad(),p.estado()});
         }
     } catch (ClassNotFoundException ex) {
         Logger.getLogger(VistaMesa.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,9 +269,9 @@ modelo.removeRow(i );
 }
 public void cargaAlumnos(){
     //Carga numero de mesas al ComboBox
-     for(Mesa item:listaMesa){
-            jComboBox1.addItem(item);
-    }
+         for (Mesa item: listaMesa) {
+            jComboBox1.addItem(item.toString());
+        }
 
 }
 
