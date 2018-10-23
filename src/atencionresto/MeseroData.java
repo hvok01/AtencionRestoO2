@@ -95,8 +95,8 @@ public class MeseroData {
                 mesero= new Mesero();
                 mesero.setId_mesero(resultSet.getInt("id"));
                 mesero.setNombre_mesero(resultSet.getString("nombre"));
-                mesero.setDni_mesero(resultSet.getInt("dni");
-                mesero.setEstado(resultSet.getBoolean("estado");
+              mesero.setDni_mesero(resultSet.getInt("dni"));
+              mesero.setEstado(resultSet.getBoolean(0));
 
                 meseros.add(mesero);
             }      
