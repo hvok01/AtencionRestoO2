@@ -19,29 +19,38 @@ public class MeseroData {
     }
     
     public void guardarMesero (Mesero mesero) {
-        
-        PreparedStatement ps;
-        
+             
         try {
-            ps = connection.prepareStatement("INSERT INTO mesero (nombre_mesero, dni_mesero, estado)"
-                    + " VALUES ( ? , ? , ? );");
+            
+            String sql = "INSERT INTO mesero (nombre_mesero, dni_mesero, estado)"
+                    + " VALUES ( ? , ? , ? );";
+
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+         
             ps.setString(1, mesero.getNombre_mesero());
             ps.setInt(2, mesero.getDni_mesero());
             ps.setBoolean(3, mesero.getEstado());
             ps.executeUpdate();
+            ResultSet rs = ps.getGeneratedKeys();
+
+            if (rs.next()) {
+                mesero.setId_mesero(rs.getInt(1));
+            } else {
+                System.out.println("No se pudo obtener el id luego de insertar un alumno");
+            }
             ps.close();
     
         } catch (SQLException ex) {
             System.out.println("Error al insertar el mesero: " + ex.getMessage());
         }
+       
     }
    
     public void borrarMesero (Mesero mesero) {
-        
-        PreparedStatement ps;
-        
+      
         try {
-            ps = connection.prepareStatement("DELETE FROM mesero WHERE nombre_mesero = ( ? );");
+            String sql = "DELETE FROM mesero WHERE nombre_mesero = ( ? );";
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, mesero.getNombre_mesero());
             ps.executeUpdate();
             ps.close();
@@ -49,6 +58,7 @@ public class MeseroData {
         } catch (SQLException ex) {
             Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
     
     public void actualizarMesero (Mesero mesero) { 
@@ -67,7 +77,35 @@ public class MeseroData {
         } catch (SQLException ex) {
             System.out.println("Error al actualizar el mesero: " + ex.getMessage());
         }
+
     }
+    /*
+        public List<Mesero> obtenerAlumnos(){
+        List<Mesero> mesero = new ArrayList<Mesero>();
+            
+
+        try {
+            String sql = "SELECT * FROM mesero;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            Mesero mesero;
+            while(resultSet.next()){
+                mesero= new Mesero();
+                mesero.setId(resultSet.getInt("id"));
+                alumno.setNombre(resultSet.getString("nombre"));
+                alumno.setInt(resultSet.getInt("dni")
+                alumno.setActivo(resultSet.getBoolean("activo"));
+
+                alumnos.add(mesero);
+            }      
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener los alumnos: " + ex.getMessage());
+        }
+  
+        return mesero;
+    }
+    */
     
     public void logearMesero (String nombre,int dni) {
         
