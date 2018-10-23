@@ -12,16 +12,16 @@ public class Mesa {
     private int idMesa;
     private int numMesa;
     private int capacidad;
-    private boolean estado;
+    private String estado;
 
-    public Mesa(int idMesa, int numMesa, int capacidad, boolean estado) {
+    public Mesa(int idMesa, int numMesa, int capacidad, String estado) {
         this.idMesa = idMesa;
         this.numMesa = numMesa;
         this.capacidad = capacidad;
         this.estado = estado;
     }
 
-    public Mesa(int numMesa, int capacidad, boolean estado) {
+    public Mesa(int numMesa, int capacidad, String estado) {
         this.numMesa = numMesa;
         this.capacidad = capacidad;
         this.estado = estado;
@@ -54,11 +54,11 @@ public class Mesa {
         this.capacidad = capacidad;
     }
 
-    public boolean isEstado() {
+    public String estado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setestado(String estado) {
         this.estado = estado;
     }
 

@@ -30,13 +30,13 @@ public class MesaData {
     public void guardarMesa (Mesa mesa) {       
              try {
             
-            String sql = "INSERT INTO cursada (idAlumno, idMateria, nota) VALUES ( ? , ? , ? );";
+            String sql = "INSERT INTO mesa (id_mesa, numero_mesa, capacidad_mesa, estado) VALUES ( ? , ? , ?, ? );";
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, mesa.getIdMesa());
             statement.setInt(2, mesa.getNumMesa());
             statement.setInt(3, mesa.getCapacidad());
-            statement.setBoolean(3, true);
+            statement.setString(3, mesa.estado());
             
             
             statement.executeUpdate();
@@ -73,19 +73,19 @@ public class MesaData {
        public void actualizarMesa(Mesa mesa){
               try {
             
-            String sql = "UPDATE alumno SET nombre = ?, fecNac = ? , activo =? WHERE id = ?;";
+            String sql = "UPDATE mesa SET  numero_mesa = ? , capacidad_mesa =? , estado=? WHERE id = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            statement.setInt(1, mesa.getIdMesa());
-            statement.setInt(2, mesa.getNumMesa());
-            statement.setInt(3, mesa.getCapacidad());
-            statement.setBoolean(3, true);
+            statement.setInt(1, mesa.getNumMesa());
+            statement.setInt(2, mesa.getCapacidad());
+            statement.setString(3, mesa.estado());
+            statement.setInt(4, mesa.getIdMesa());
             statement.executeUpdate();
           
             statement.close();
     
         } catch (SQLException ex) {
-            System.out.println("Error al insertar un alumno: " + ex.getMessage());
+            System.out.println("Error al insertar un mesa: " + ex.getMessage());
         }
        }
       public Mesa buscarMesa(int id){
@@ -104,7 +104,7 @@ public class MesaData {
                 mesa.setIdamesa(resultSet.getInt("id"));
                 mesa.setNumMesa(resultSet.getInt("numero"));
                 mesa.setCapacidad(resultSet.getInt("capacidad"));
-                mesa.setEstado(resultSet.getBoolean("estado"));
+                mesa.setestado(resultSet.getString("estado"));
             }      
             statement.close();
         } catch (SQLException ex) {
