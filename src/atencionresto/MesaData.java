@@ -122,7 +122,7 @@ public class MesaData {
         PreparedStatement ps;
         
         try {
-            ps = connection.prepareStatement("SELECT num_mesa FROM `mesa`;");
+            ps = connection.prepareStatement("SELECT * FROM `mesa`;");
             
             ps.executeUpdate();
             ResultSet resultSet = ps.executeQuery();
@@ -130,7 +130,8 @@ public class MesaData {
             while(resultSet.next()){
                 nuevaMesa = new Mesa();
                 nuevaMesa.setNumMesa(resultSet.getInt("num_mesa"));
-                
+                nuevaMesa.setCapacidad(resultSet.getInt("capacidad"));
+                nuevaMesa.setestado(resultSet.getString("estado_mesa"));
                 mesas.add(nuevaMesa);
             } 
             ps.close();

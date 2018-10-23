@@ -64,7 +64,6 @@ private Mesa mesa;
         jButtonModificar = new javax.swing.JButton();
         jtxtEstado = new javax.swing.JTextField();
         jButtonActualizar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
 
         setBorder(null);
 
@@ -116,8 +115,6 @@ private Mesa mesa;
             }
         });
 
-        jButton1.setText("Volver");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -145,10 +142,6 @@ private Mesa mesa;
                                 .addGap(43, 43, 43)
                                 .addComponent(jtxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(37, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(260, 260, 260))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,9 +162,7 @@ private Mesa mesa;
                             .addComponent(jButtonModificar))
                         .addGap(18, 18, 18)
                         .addComponent(jButtonActualizar)))
-                .addGap(62, 62, 62)
-                .addComponent(jButton1)
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addContainerGap(238, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -214,7 +205,6 @@ private Mesa mesa;
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonConsulta;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -236,8 +226,8 @@ int filas;//variable global
         MesaData pd = new MesaData(conexion);
         listaMesa = (ArrayList) pd.obtenerMesas();
         
-        for (Mesa p : listaMesa ) {
-            modelo.addRow(new Object[]{p.getIdMesa() ,p.getNumMesa(),p.getCapacidad(),p.estado()});
+        for (Mesa p : listaMesa  ){
+            modelo.addRow(new Object[]{p.getNumMesa(),p.getCapacidad(),p.estado()});
         }
     } catch (ClassNotFoundException ex) {
         Logger.getLogger(VistaMesa.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,7 +237,6 @@ int filas;//variable global
   
            //Titulos de Columnas
         ArrayList<Object> columnas=new ArrayList<Object>();
-        columnas.add("ID");
         columnas.add("Numero");
         columnas.add("Capacidad");
         columnas.add("estado");
