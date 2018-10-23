@@ -16,6 +16,10 @@ public class Producto {
         this.cantidad = cantidad;
         this.nombre_producto = nombre_producto;
     }
+
+    Producto() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public int getId_producto() {
         return id_producto;
