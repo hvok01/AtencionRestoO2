@@ -34,7 +34,7 @@ private Mesa mesa;
   public VistaMesa(){
         initComponents();
     try {
-        conexion = new Conexion("jdbc:mysql://localhost/universidad", "root", "");
+        conexion = new Conexion("jdbc:mysql://localhost/resto", "root", "");
     
         modelo=new DefaultTableModel();
         
