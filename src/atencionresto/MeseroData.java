@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -79,9 +81,9 @@ public class MeseroData {
         }
 
     }
-    /*
+    
         public List<Mesero> obtenerAlumnos(){
-        List<Mesero> mesero = new ArrayList<Mesero>();
+        List<Mesero> meseros = new ArrayList<Mesero>();
             
 
         try {
@@ -91,21 +93,20 @@ public class MeseroData {
             Mesero mesero;
             while(resultSet.next()){
                 mesero= new Mesero();
-                mesero.setId(resultSet.getInt("id"));
-                alumno.setNombre(resultSet.getString("nombre"));
-                alumno.setInt(resultSet.getInt("dni")
-                alumno.setActivo(resultSet.getBoolean("activo"));
+                mesero.setId_mesero(resultSet.getInt("id"));
+                mesero.setNombre_mesero(resultSet.getString("nombre"));
+                mesero.setDni_mesero(resultSet.getInt("dni");
+                mesero.setEstado(resultSet.getBoolean("estado");
 
-                alumnos.add(mesero);
+                meseros.add(mesero);
             }      
             statement.close();
         } catch (SQLException ex) {
-            System.out.println("Error al obtener los alumnos: " + ex.getMessage());
+            System.out.println("Error al obtener lo mesero: " + ex.getMessage());
         }
   
-        return mesero;
+        return meseros;
     }
-    */
     
     public void logearMesero (String nombre,int dni) {
         
