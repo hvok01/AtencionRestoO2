@@ -189,7 +189,7 @@ private Mesa mesa;
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonConsultaActionPerformed
-    
+    cargarDatos();
     }//GEN-LAST:event_BotonConsultaActionPerformed
 //METODO PARA TOMAR VALOR DEL ESTADO DE MESA
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -234,7 +234,7 @@ int filas;//variable global
    
         MesaData cd =new MesaData(conexion);
         Mesa seleccionado=(Mesa)jComboBox1.getSelectedItem();
-        listaMesa = (ArrayList)cd.obtenerMesas();
+        listaMesa = (ArrayList)cd.obtenerMesas(seleccionado.getNumMesa());
         
         for(Mesa m:listaMesa){
         
