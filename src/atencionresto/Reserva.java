@@ -14,32 +14,31 @@ import java.time.LocalDate;
 public class Reserva {
     
    private int idReserva;
+    private int idMesa;
     private String nombreCliente;
     private int dniCliente;
     private LocalDate fechaHora;
     private boolean estadoVigente;
-    private Mesa mesa;
 
-    public Reserva(int idReserva, String nombreCliente, int dniCliente, LocalDate fechaHora, boolean estadoVigente, Mesa mesa) {
+    public Reserva(int idReserva, int idMesa, String nombreCliente, int dniCliente, LocalDate fechaHora, boolean estadoVigente) {
         this.idReserva = idReserva;
+        this.idMesa = idMesa;
         this.nombreCliente = nombreCliente;
         this.dniCliente = dniCliente;
         this.fechaHora = fechaHora;
         this.estadoVigente = estadoVigente;
-        this.mesa = mesa;
     }
 
-    public Reserva(String nombreCliente, int dniCliente, LocalDate fechaHora, boolean estado, Mesa mesa) {
+    public Reserva(int idMesa, String nombreCliente, int dniCliente, LocalDate fechaHora, boolean estadoVigente) {
+        this.idMesa = idMesa;
         this.nombreCliente = nombreCliente;
         this.dniCliente = dniCliente;
         this.fechaHora = fechaHora;
         this.estadoVigente = estadoVigente;
-        this.mesa = mesa;
     }
 
     public Reserva() {
     }
-    
 
     public int getIdReserva() {
         return idReserva;
@@ -47,6 +46,14 @@ public class Reserva {
 
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
+    }
+
+    public int getIdMesa() {
+        return idMesa;
+    }
+
+    public void setIdMesa(int idMesa) {
+        this.idMesa = idMesa;
     }
 
     public String getNombreCliente() {
@@ -80,13 +87,7 @@ public class Reserva {
     public void setEstadoVigente(boolean estadoVigente) {
         this.estadoVigente = estadoVigente;
     }
-
-    public Mesa getMesa() {
-        return mesa;
-    }
-
-    public void setMesa(Mesa mesa) {
-        this.mesa = mesa;
-    }
-    
+      
 }
+
+

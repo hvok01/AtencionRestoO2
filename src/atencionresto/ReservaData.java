@@ -33,18 +33,19 @@ private MesaData mesa;
         Logger.getLogger(ReservaData.class.getName()).log(Level.SEVERE, null, ex);
     }
     }
-
-   public void guardarReserva(Reserva reserva){
+    
+public void guardarReserva(Reserva reserva){
         try {
             
-            String sql = "INSERT INTO reserva (nombre_cliente, dni_cliente, fecha_hora, id_mesa, estado_vigente) VALUES ( ? , ? , ? , ? , ? );";
+            String sql = "INSERT INTO reserva ( id_mesa, nombre_cliente, dni_cliente, fecha_hora, estado_vigente) VALUES ( ? , ? , ? , ? , ? );";
 
             try (PreparedStatement statment = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-                statment.setString(1, reserva.getNombreCliente());
-                statment.setInt(2, reserva.getDniCliente());
-                statment.setDate(3, Date.valueOf(reserva.getFechaHora()));
-                statment.setBoolean(4, reserva.getEstadoVigente());
-                statment.setInt(5, reserva.getMesa().getIdMesa());
+                statment.setInt(1, reserva.getIdMesa());
+                statment.setString(2, reserva.getNombreCliente());
+                statment.setInt(3, reserva.getDniCliente());
+                statment.setDate(4, Date.valueOf(reserva.getFechaHora()));
+                statment.setBoolean(5, reserva.getEstadoVigente());
+                
   
  
                 statment.executeUpdate();
@@ -74,12 +75,13 @@ private MesaData mesa;
                     reserva = new Reserva();
                     conexion=new Conexion();
                     conexion.getConexion();
-                    reserva.setIdReserva(resultSet.getInt(1));
-                    reserva.setNombreCliente(resultSet.getString(2));
-                    reserva.setDniCliente(resultSet.getInt(3));
-                    reserva.setFechaHora(resultSet.getDate(4).toLocalDate());
-                    reserva.setEstadoVigente(resultSet.getBoolean(5));
-                    statment.setInt(5, reserva.getMesa().getIdMesa());
+                    reserva.setIdReserva(resultSet.getInt("id_reserva"));
+                    reserva.setIdMesa(resultSet.getInt("id_mesa"));
+                    reserva.setNombreCliente(resultSet.getString("nombre_cliente"));
+                    reserva.setDniCliente(resultSet.getInt("dni_cliente"));
+                    reserva.setFechaHora(resultSet.getDate("fecha_hora").toLocalDate());
+                    reserva.setEstadoVigente(resultSet.getBoolean("estado_vigente"));
+                    
   
               
                     reservas.add(reserva);
@@ -93,31 +95,76 @@ private MesaData mesa;
         
         return reservas;
     }
+   
   
+         
+    public void actualizarReserva(Reserva reserva){
+    
+        try {
+            
+            String sql = "UPDATE reserva SET id_mesa = ?, nombre_cliente = ?, dni_cliente = ? , fecha_hora =? , estado_vigente , WHERE id = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, reserva.getIdMesa());
+            statement.setString(2, reserva.getNombreCliente());
+            statement.setInt(3, reserva.getDniCliente());
+            statement.setDate(4,Date.valueOf(reserva.getFechaHora()));
+            statement.setBoolean(5, reserva.getEstadoVigente());
+            
+            statement.executeUpdate();
+            
+          
+            statement.close();
+    
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar la reserva: " + ex.getMessage());
+        } 
+    }
+    
+    
+    
+    public Reserva buscarReserva(int idReserva){
+      Reserva reserva=null;
+    try {
+            
+            String sql = "SELECT * FROM reserva WHERE id =?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, idReserva);
+           
+            
+            ResultSet resultSet=statement.executeQuery();
+            
+            while(resultSet.next()){
+                reserva = new Reserva();
+                reserva.setIdReserva(resultSet.getInt("id_reserva"));
+                reserva.setIdMesa(resultSet.getInt("idMesa"));
+                reserva.setNombreCliente(resultSet.getString("nombre_cliente"));
+                reserva.setDniCliente(resultSet.getInt("dni_cliente"));
+                reserva.setFechaHora(resultSet.getDate("fecha_hora").toLocalDate());
+                reserva.setEstadoVigente(resultSet.getBoolean("estado_vigente"));
+               
+            }      
+            statement.close();
      
+    
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar ls reserva: " + ex.getMessage());
+        }
+        
+        return reserva;
+    }
+
      public void borrarReserva(int idReserva) throws ClassNotFoundException{
 
         try {
-            String sql = "DELETE FROM reserva where id= ?;";
+            String sql = "DELETE reserva where id= ?;";
           try (PreparedStatement statment = connection.prepareStatement(sql)) {
               statment.setInt(1, idReserva);
             }
         } catch (SQLException ex) {
             System.out.println("Error al borrar la reserva: " + ex.getMessage());
         }
-    } 
-    
-     
-    public void cancelarReserva(int idReserva) throws SQLException{
-        
-       try {
-        String sql = "UPDATE FROM reserva SET estado_vigente=0 where id_reserva= ? ;";
-       try (PreparedStatement statment = connection.prepareStatement(sql)) {
-              statment.setInt(1, idReserva);
-            }  
-       } catch (SQLException ex) {
-            System.out.println("Error al cancelar la reserva: " + ex.getMessage());
-        }
+     }
     }
-}
 
