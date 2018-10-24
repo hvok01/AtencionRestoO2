@@ -1,6 +1,7 @@
 
 package atencionresto;
 
+import home.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,20 +23,12 @@ public class MeseroData {
         PreparedStatement ps;
         
         try {
-            ps = connection.prepareStatement("INSERT INTO mesero (nombre_mesero, password, dni_mesero, estado)"
-                    + " VALUES ( ? , ? , ? , ? );");
-            ps.setString(2, mesero.getNombre_mesero());
-            ps.setInt(3, mesero.getDni_mesero());
-            ps.setBoolean(4, mesero.getEstado());
+            ps = connection.prepareStatement("INSERT INTO mesero (nombre_mesero, dni_mesero, estado)"
+                    + " VALUES ( ? , ? , ? );");
+            ps.setString(1, mesero.getNombre_mesero());
+            ps.setInt(2, mesero.getDni_mesero());
+            ps.setBoolean(3, mesero.getEstado());
             ps.executeUpdate();
-            
-            ResultSet rs = ps.getGeneratedKeys();
-
-            if (rs.next()) {
-                mesero.setId_mesero(rs.getInt(1));
-            } else {
-                System.out.println("No se pudo obtener el id luego de insertar el mesero");
-            }
             ps.close();
     
         } catch (SQLException ex) {
@@ -76,18 +69,25 @@ public class MeseroData {
         }
     }
     
-    public void logearMesero (String nombre,String contraseña) {
+    public void logearMesero (String nombre,int dni) {
         
         PreparedStatement ps;
         
         try {
             ps = connection.prepareStatement("SELECT nombre_mesero FROM `mesero` "
-                    + " WHERE nombre_mesero = ( ? ) AND password = ( ? );");
+                    + " WHERE nombre_mesero = ( ? ) AND dni_mesero = ( ? );");
             
             ps.setString(1,nombre);
-            ps.setString(2, contraseña);
+            ps.setInt(2, dni);
             ps.executeUpdate();
             ResultSet resultSet = ps.executeQuery();
+            if(resultSet.next()) {
+                JOptionPane .showMessageDialog(null,"Bienvenido/a " + nombre);
+                Main m = new Main();
+                m.setVisible(true);
+            } else {
+                JOptionPane .showMessageDialog(null,"Nombre de usuario o contraseña incorrectos");
+            }
             ps.close();
         } catch (SQLException ex) {
             Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);

@@ -16,6 +16,17 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        vistaDefecto();
+    }
+    
+    public void vistaDefecto() {
+        jDes.removeAll();
+        jDes.repaint();
+            VistaPedidos vp = new VistaPedidos();
+            vp.setVisible(true);
+        jDes.add(vp);
+        jDes.moveToFront(vp);
     }
 
     /**
@@ -27,37 +38,153 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jDes = new javax.swing.JDesktopPane();
+        botonPedidos = new javax.swing.JButton();
+        botonMesa = new javax.swing.JButton();
+        botonMeseros = new javax.swing.JButton();
+        botonDatosP = new javax.swing.JButton();
+        botonOtros = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Hola soy el main");
+        javax.swing.GroupLayout jDesLayout = new javax.swing.GroupLayout(jDes);
+        jDes.setLayout(jDesLayout);
+        jDesLayout.setHorizontalGroup(
+            jDesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 631, Short.MAX_VALUE)
+        );
+        jDesLayout.setVerticalGroup(
+            jDesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        botonPedidos.setText("Vista Pedidos");
+        botonPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonPedidosActionPerformed(evt);
+            }
+        });
+
+        botonMesa.setText("Vista Mesa");
+        botonMesa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonMesaActionPerformed(evt);
+            }
+        });
+
+        botonMeseros.setText("Vista Meseros");
+        botonMeseros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonMeserosActionPerformed(evt);
+            }
+        });
+
+        botonDatosP.setText("Vista Datos Pe");
+        botonDatosP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonDatosPActionPerformed(evt);
+            }
+        });
+
+        botonOtros.setText("otros");
+        botonOtros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonOtrosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(344, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonOtros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(botonDatosP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(botonMeseros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(botonMesa, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                .addGap(637, 637, 637))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addComponent(botonPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addComponent(botonMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonMeseros, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(botonDatosP, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonOtros, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jDes)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void botonPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPedidosActionPerformed
+        // TODO add your handling code here:
+        
+        jDes.removeAll();
+        jDes.repaint();
+            VistaPedidos vp = new VistaPedidos();
+            vp.setVisible(true);
+        jDes.add(vp);
+        jDes.moveToFront(vp);
+        
+    }//GEN-LAST:event_botonPedidosActionPerformed
+
+    private void botonMesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMesaActionPerformed
+        // TODO add your handling code here:
+        jDes.removeAll();
+        jDes.repaint();
+            VistaMesa vm = new VistaMesa();
+            vm.setVisible(true);
+        jDes.add(vm);
+        jDes.moveToFront(vm);
+    }//GEN-LAST:event_botonMesaActionPerformed
+
+    private void botonMeserosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonMeserosActionPerformed
+        // TODO add your handling code here:
+        jDes.removeAll();
+        jDes.repaint();
+            VistaMeseros vme = new VistaMeseros();
+            vme.setVisible(true);
+        jDes.add(vme);
+        jDes.moveToFront(vme);
+    }//GEN-LAST:event_botonMeserosActionPerformed
+
+    private void botonDatosPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDatosPActionPerformed
+        // TODO add your handling code here:
+        jDes.removeAll();
+        jDes.repaint();
+            VistaDatosPedidos vdp = new VistaDatosPedidos();
+            vdp.setVisible(true);
+        jDes.add(vdp);
+        jDes.moveToFront(vdp);
+    }//GEN-LAST:event_botonDatosPActionPerformed
+
+    private void botonOtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOtrosActionPerformed
+        // TODO add your handling code here:
+        jDes.removeAll();
+        jDes.repaint();
+            VistaExtra ve = new VistaExtra();
+            ve.setVisible(true);
+        jDes.add(ve);
+        jDes.moveToFront(ve);
+    }//GEN-LAST:event_botonOtrosActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public void main() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -90,6 +217,11 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton botonDatosP;
+    private javax.swing.JButton botonMesa;
+    private javax.swing.JButton botonMeseros;
+    private javax.swing.JButton botonOtros;
+    private javax.swing.JButton botonPedidos;
+    private javax.swing.JDesktopPane jDes;
     // End of variables declaration//GEN-END:variables
 }

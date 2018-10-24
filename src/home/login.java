@@ -5,7 +5,6 @@
  */
 package home;
 import atencionresto.* ;
-import interfaceresto.* ;
 import static java.lang.Integer.parseInt;
 import javax.swing.JOptionPane;
 
@@ -38,7 +37,7 @@ public class login extends javax.swing.JFrame {
         LogoResto = new javax.swing.JLabel();
         jNombreUsuario = new javax.swing.JTextField();
         jContraseña = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        jIniciarSesion = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jButton3 = new javax.swing.JButton();
@@ -47,14 +46,14 @@ public class login extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jVolver = new javax.swing.JButton();
         jLabelP = new javax.swing.JLabel();
-        jLabelDNI = new javax.swing.JLabel();
         jLabelNU = new javax.swing.JLabel();
         jCrearCuenta = new javax.swing.JLabel();
         jSeparator = new javax.swing.JSeparator();
         jRegistrarse = new javax.swing.JButton();
         jNuevoUsuario = new javax.swing.JTextField();
-        jDni = new javax.swing.JTextField();
         jPassword = new javax.swing.JPasswordField();
+        jEtiqueta1 = new javax.swing.JLabel();
+        jEtiqueta2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -94,18 +93,18 @@ public class login extends javax.swing.JFrame {
         });
         panel_login.add(jContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 150, 40));
 
-        jButton1.setBackground(new java.awt.Color(251, 250, 219));
-        jButton1.setFont(new java.awt.Font("Cabin", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(75, 34, 38));
-        jButton1.setText("Iniciar Sesion");
-        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(75, 34, 38), 5));
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jIniciarSesion.setBackground(new java.awt.Color(251, 250, 219));
+        jIniciarSesion.setFont(new java.awt.Font("Cabin", 0, 14)); // NOI18N
+        jIniciarSesion.setForeground(new java.awt.Color(75, 34, 38));
+        jIniciarSesion.setText("Iniciar Sesion");
+        jIniciarSesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(75, 34, 38), 5));
+        jIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jIniciarSesionActionPerformed(evt);
             }
         });
-        panel_login.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 120, 40));
+        panel_login.add(jIniciarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 120, 40));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(75, 34, 38));
@@ -176,10 +175,6 @@ public class login extends javax.swing.JFrame {
         jLabelP.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Documents\\NetBeansProjects\\AtencionResto\\src\\imagenes\\linea-02-01.png")); // NOI18N
         registrar.add(jLabelP, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 300, 30));
 
-        jLabelDNI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelDNI.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Documents\\NetBeansProjects\\AtencionResto\\src\\imagenes\\linea-02-01.png")); // NOI18N
-        registrar.add(jLabelDNI, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 300, 30));
-
         jLabelNU.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelNU.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Documents\\NetBeansProjects\\AtencionResto\\src\\imagenes\\linea-02-01.png")); // NOI18N
         registrar.add(jLabelNU, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 300, 30));
@@ -217,19 +212,6 @@ public class login extends javax.swing.JFrame {
         });
         registrar.add(jNuevoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 167, 170, 20));
 
-        jDni.setBackground(new java.awt.Color(251, 250, 219));
-        jDni.setFont(new java.awt.Font("Cabin", 0, 11)); // NOI18N
-        jDni.setForeground(new java.awt.Color(75, 34, 38));
-        jDni.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jDni.setText("DNI");
-        jDni.setBorder(null);
-        jDni.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jDniFocusGained(evt);
-            }
-        });
-        registrar.add(jDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(63, 218, 170, 20));
-
         jPassword.setBackground(new java.awt.Color(251, 250, 219));
         jPassword.setForeground(new java.awt.Color(75, 34, 38));
         jPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -241,6 +223,18 @@ public class login extends javax.swing.JFrame {
             }
         });
         registrar.add(jPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, 170, -1));
+
+        jEtiqueta1.setFont(new java.awt.Font("Cabin", 0, 11)); // NOI18N
+        jEtiqueta1.setForeground(new java.awt.Color(75, 34, 38));
+        jEtiqueta1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jEtiqueta1.setText("Acontinuacion introduzca su dni");
+        registrar.add(jEtiqueta1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 160, -1));
+
+        jEtiqueta2.setFont(new java.awt.Font("Cabin", 0, 11)); // NOI18N
+        jEtiqueta2.setForeground(new java.awt.Color(75, 34, 38));
+        jEtiqueta2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jEtiqueta2.setText("como contraseña");
+        registrar.add(jEtiqueta2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 160, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -272,11 +266,8 @@ public class login extends javax.swing.JFrame {
             String usuario = jNuevoUsuario.getText();
             mesero.setNombre_mesero(usuario);
             
-            String password = jPassword.getText();
-            mesero.setPassword(password);
-            
-            String dni = jDni.getText();
-            mesero.setDni_mesero(parseInt(dni));
+            int dni = parseInt(jPassword.getText());
+            mesero.setDni_mesero(dni);
             
             meseroData.guardarMesero(mesero);
             
@@ -304,7 +295,7 @@ public class login extends javax.swing.JFrame {
         registrar.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIniciarSesionActionPerformed
         // TODO add your handling code here:
         Conexion conexion;
         
@@ -316,28 +307,16 @@ public class login extends javax.swing.JFrame {
             String usuario = jNombreUsuario.getText();
             mesero.setNombre_mesero(usuario);
             
-            String password = jContraseña.getText();
-            mesero.setPassword(password);
+            int dni = parseInt(jContraseña.getText());
+            mesero.setDni_mesero(dni);
             
-            meseroData.logearMesero(usuario, password);
-            
-            //crear alerta personalizada joptionPane es temporal.
-            JOptionPane .showMessageDialog(null,"bienvenido " + mesero.getNombre_mesero());
+            meseroData.logearMesero(usuario, dni);
             
             
-            Interfacemesero im = new Interfacemesero();
-            panel_login.setVisible(false);
-            registrar.setVisible(false);
-            im.setVisible(true);
         } catch (Exception e) {
             System.out.println("Error al instanciar la clase conexion: " + e.getMessage());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jDniFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jDniFocusGained
-        // TODO add your handling code here:
-        jDni.setText("");
-    }//GEN-LAST:event_jDniFocusGained
+    }//GEN-LAST:event_jIniciarSesionActionPerformed
 
     private void jPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordFocusGained
         // TODO add your handling code here:
@@ -392,16 +371,16 @@ public class login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel LogoResto;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JPasswordField jContraseña;
     private javax.swing.JLabel jCrearCuenta;
-    private javax.swing.JTextField jDni;
+    private javax.swing.JLabel jEtiqueta1;
+    private javax.swing.JLabel jEtiqueta2;
+    private javax.swing.JButton jIniciarSesion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabelDNI;
     private javax.swing.JLabel jLabelNU;
     private javax.swing.JLabel jLabelP;
     private javax.swing.JTextField jNombreUsuario;
