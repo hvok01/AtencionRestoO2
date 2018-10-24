@@ -8,6 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,26 +83,33 @@ public class ProductoData {
         }
     }
     
-    public void obtenerProducto (int id) {
-        
-        PreparedStatement ps;
-        
+        public List<Producto> obtenerProductos(){
+        List<Producto> productos = new ArrayList<>();
+            
+
         try {
-            ps = connection.prepareStatement("SELECT * FROM `producto` WHERE id_producto = ( ? );");
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            ResultSet resultSet = ps.executeQuery();
-            Producto unProducto;
+            String sql = "SELECT * FROM producto;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+            Producto producto;
             while(resultSet.next()){
-                unProducto = new Producto();
-                unProducto.setNombre_producto(resultSet.getString("nombre_producto"));
-                System.out.println("usted selecciono el id del producto: " + unProducto.getNombre_producto());
-               
-            } 
-            ps.close();
+                producto = new Producto();
+                producto.setId_producto(resultSet.getInt("id"));
+                producto.setPrecio(resultSet.getDouble("precio"));
+                producto.setCodigo(resultSet.getInt("codigo"));
+                producto.setCantidad(resultSet.getInt("cantidad"));
+                producto.setNombre_producto(resultSet.getString("nombre_producto"));
+
+                productos.add(producto);
+            }      
+            statement.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ProductoData.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error al obtener los productos: " + ex.getMessage());
         }
+        
+        
+        return productos;
     }
+        
     
 }
