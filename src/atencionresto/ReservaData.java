@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
+/**0
  *
  * @author nn
  */
@@ -166,5 +166,31 @@ public void guardarReserva(Reserva reserva){
             System.out.println("Error al borrar la reserva: " + ex.getMessage());
         }
      }
+     
+      public Mesa buscarMesa(int numero){
+    Mesa mesa=null;
+    try {
+            
+            String sql = "SELECT * FROM mesa WHERE id =?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setInt(1, numero);
+            
+            ResultSet resultSet=statement.executeQuery();
+            
+            while(resultSet.next()){
+                mesa = new Mesa();
+                mesa.setIdamesa(resultSet.getInt("id"));
+                mesa.setNumMesa(resultSet.getInt("numero"));
+                mesa.setCapacidad(resultSet.getInt("capacidad"));
+                mesa.setEstado(resultSet.getBoolean("estado"));
+            }      
+            statement.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar un mesa: " + ex.getMessage());
+        }
+        return mesa;
+       }
     }
+    
 

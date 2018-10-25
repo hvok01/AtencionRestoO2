@@ -175,7 +175,7 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         jDes.removeAll();
         jDes.repaint();
-            VistaExtra ve = new VistaExtra();
+            VistaReserva ve = new VistaReserva();
             ve.setVisible(true);
         jDes.add(ve);
         jDes.moveToFront(ve);
