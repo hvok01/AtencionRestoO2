@@ -11,6 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -112,4 +116,28 @@ public class MesaData {
         }
         return mesa;
        }
+      
+      public List<Mesa> obtenerMesas () {
+        List<Mesa> mesas = new ArrayList<Mesa>();
+        PreparedStatement ps;
+        
+        try {
+            ps = connection.prepareStatement("SELECT num_mesa FROM `mesa`;");
+            
+            ps.executeUpdate();
+            ResultSet resultSet = ps.executeQuery();
+            Mesa nuevaMesa;
+            while(resultSet.next()){
+                nuevaMesa = new Mesa();
+                nuevaMesa.setNumMesa(resultSet.getInt("num_mesa"));
+                
+                mesas.add(nuevaMesa);
+            } 
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(MesaData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       // System.out.println(mesas);
+        return mesas;
+    }
 }

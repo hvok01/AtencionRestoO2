@@ -5,7 +5,6 @@ package atencionresto;
 public class Mesero {
     private int id_mesero;
     private String nombre_mesero;
- 
     private int dni_mesero;
     private boolean estado;
         
