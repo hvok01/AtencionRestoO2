@@ -127,7 +127,7 @@ public void guardarReserva(Reserva reserva){
       Reserva reserva=null;
     try {
             
-            String sql = "SELECT * FROM reserva WHERE id =?;";
+            String sql = "SELECT * FROM reserva WHERE id_reserva =?;";
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, idReserva);
@@ -138,7 +138,7 @@ public void guardarReserva(Reserva reserva){
             while(resultSet.next()){
                 reserva = new Reserva();
                 reserva.setIdReserva(resultSet.getInt("id_reserva"));
-                reserva.setIdMesa(resultSet.getInt("idMesa"));
+                reserva.setIdMesa(resultSet.getInt("id_mesa"));
                 reserva.setNombreCliente(resultSet.getString("nombre_cliente"));
                 reserva.setDniCliente(resultSet.getInt("dni_cliente"));
                 reserva.setFechaHora(resultSet.getDate("fecha_hora").toLocalDate());
@@ -158,7 +158,7 @@ public void guardarReserva(Reserva reserva){
      public void borrarReserva(int idReserva) throws ClassNotFoundException{
 
         try {
-            String sql = "DELETE reserva where id= ?;";
+            String sql = "DELETE reserva where id_reserva= ?;";
           try (PreparedStatement statment = connection.prepareStatement(sql)) {
               statment.setInt(1, idReserva);
             }
@@ -167,11 +167,11 @@ public void guardarReserva(Reserva reserva){
         }
      }
      
-      public Mesa buscarMesa(int numero){
+     public Mesa buscarMesa(int numero){
     Mesa mesa=null;
     try {
             
-            String sql = "SELECT * FROM mesa WHERE id =?;";
+            String sql = "SELECT * FROM mesa WHERE num_mesa = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, numero);
@@ -180,14 +180,14 @@ public void guardarReserva(Reserva reserva){
             
             while(resultSet.next()){
                 mesa = new Mesa();
-                mesa.setIdamesa(resultSet.getInt("id"));
-                mesa.setNumMesa(resultSet.getInt("numero"));
+                mesa.setIdamesa(resultSet.getInt("id_mesa"));
+                mesa.setNumMesa(resultSet.getInt("num_mesa"));
                 mesa.setCapacidad(resultSet.getInt("capacidad"));
-                mesa.setEstado(resultSet.getBoolean("estado"));
+                mesa.setestado(resultSet.getString("estado_mesa"));
             }      
             statement.close();
         } catch (SQLException ex) {
-            System.out.println("Error al insertar un mesa: " + ex.getMessage());
+            System.out.println("Error al Buscar una mesa: " + ex.getMessage());
         }
         return mesa;
        }
