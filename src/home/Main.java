@@ -43,7 +43,7 @@ public class Main extends javax.swing.JFrame {
         botonMesa = new javax.swing.JButton();
         botonMeseros = new javax.swing.JButton();
         botonDatosP = new javax.swing.JButton();
-        botonOtros = new javax.swing.JButton();
+        botonReserva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -87,10 +87,10 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        botonOtros.setText("otros");
-        botonOtros.addActionListener(new java.awt.event.ActionListener() {
+        botonReserva.setText("Vista Reserva");
+        botonReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonOtrosActionPerformed(evt);
+                botonReservaActionPerformed(evt);
             }
         });
 
@@ -101,7 +101,7 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botonPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonOtros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                    .addComponent(botonReserva, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                     .addComponent(botonDatosP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
                     .addComponent(botonMeseros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -121,7 +121,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(botonDatosP, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botonOtros, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botonReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(jDes)
         );
@@ -171,7 +171,7 @@ public class Main extends javax.swing.JFrame {
         jDes.moveToFront(vdp);
     }//GEN-LAST:event_botonDatosPActionPerformed
 
-    private void botonOtrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOtrosActionPerformed
+    private void botonReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReservaActionPerformed
         // TODO add your handling code here:
         jDes.removeAll();
         jDes.repaint();
@@ -179,7 +179,7 @@ public class Main extends javax.swing.JFrame {
             ve.setVisible(true);
         jDes.add(ve);
         jDes.moveToFront(ve);
-    }//GEN-LAST:event_botonOtrosActionPerformed
+    }//GEN-LAST:event_botonReservaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,8 +220,8 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton botonDatosP;
     private javax.swing.JButton botonMesa;
     private javax.swing.JButton botonMeseros;
-    private javax.swing.JButton botonOtros;
     private javax.swing.JButton botonPedidos;
+    private javax.swing.JButton botonReserva;
     private javax.swing.JDesktopPane jDes;
     // End of variables declaration//GEN-END:variables
 }

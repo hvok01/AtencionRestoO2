@@ -27,7 +27,7 @@
           <Group type="102" alignment="1" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="botonPedidos" max="32767" attributes="0"/>
-                  <Component id="botonOtros" alignment="1" pref="129" max="32767" attributes="0"/>
+                  <Component id="botonReserva" alignment="1" pref="129" max="32767" attributes="0"/>
                   <Component id="botonDatosP" alignment="1" pref="129" max="32767" attributes="0"/>
                   <Component id="botonMeseros" alignment="1" pref="129" max="32767" attributes="0"/>
               </Group>
@@ -51,7 +51,7 @@
               <EmptySpace pref="15" max="32767" attributes="0"/>
               <Component id="botonDatosP" min="-2" pref="85" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="botonOtros" min="-2" pref="85" max="-2" attributes="0"/>
+              <Component id="botonReserva" min="-2" pref="85" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Component id="jDes" alignment="0" max="32767" attributes="0"/>
@@ -106,12 +106,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonDatosPActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="botonOtros">
+    <Component class="javax.swing.JButton" name="botonReserva">
       <Properties>
-        <Property name="text" type="java.lang.String" value="otros"/>
+        <Property name="text" type="java.lang.String" value="Vista Reserva"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonOtrosActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonReservaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

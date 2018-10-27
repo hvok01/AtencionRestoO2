@@ -1,43 +1,136 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package home;
 
-
-import atencionresto.Reserva;
-import atencionresto.ReservaData;
-import atencionresto.Conexion;
-import atencionresto.Mesa;
-import atencionresto.MesaData;
-import static java.lang.Integer.parseInt;
+import atencionresto.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
+import javax.swing.table.DefaultTableModel;
 
 public class VistaReserva extends javax.swing.JInternalFrame {
-private ReservaData reservaData;
-private Conexion conexion;
-private MesaData mesaData;
-private Mesa mesa;
-private Reserva reserva;
-private int idMesa;
+
+    private DefaultTableModel modelo;
+    private ReservaData reservaData;
+    private Conexion conexion;
+    private MesaData mesaData;
+    private Mesa mesa;
+    private Reserva reserva;
+    private ArrayList<Mesa> listaMesasLibres;
+    private ArrayList<Mesero> listaMesero;
+    private ArrayList<Reserva> listaReservas;
+    private int idMesero;
+    public int idMesa;
+
     public VistaReserva() {
-    try {
         initComponents();
 
-        conexion = new Conexion("jdbc:mysql://localhost/resto", "root", "");
-        reservaData = new ReservaData(conexion);
-        mesaData=new MesaData(conexion);
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(VistaReserva.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+
+            conexion = new Conexion("jdbc:mysql://localhost/resto", "root", "");
+
+            modelo = new DefaultTableModel();
+
+            mesaData = new MesaData(conexion);
+            listaMesasLibres = (ArrayList) mesaData.obtenerMesasLibres();
+            
+            reservaData = new ReservaData(conexion);
+
+            mostrarMesas();
+            cargarCabeceraReservas();
+            mostrarReservas();
+            //  mostrarMesasLibres();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(VistaReserva.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-   
+    
+    public void mostrarReservas() {
+        borraFilasTabla();
+        
+        ReservaData rd = new ReservaData(conexion);
+        listaReservas = (ArrayList) rd.obtenerReservas();
+        
+        for (Reserva r : listaReservas) {
+            modelo.addRow(new Object[] {r.getIdReserva(), r.getNombreCliente(), r.getFechaHora()});
+        }
+        
+    }
+    
+    public void borraFilasTabla() {
+
+        int a = modelo.getRowCount() - 1;
+
+        for (int i = a; i >= 0; i--) {
+
+            modelo.removeRow(i);
+        }
+    }
+    
+    public void limpiar() {
+        jtIdReserva.setText(null);
+        jNombreMesero.setText(null);
+        jMesaId.setText(null);
+        txtNombre.setText(null);
+        txtDni.setText(null);
+        txtFecha.setText(null);
+        txtHora.setText(null);
+        rbtnActiva.setDisabledSelectedIcon(frameIcon);
+        rbtnInactiva.setDisabledSelectedIcon(frameIcon);
+    }
+
+    public void obtenerMesaId() {
+        //Seguir trabajando, no funciona como deberia.
+        String valor = jMesasLibres.getSelectedItem().toString();
+        System.out.println(valor);
+
+        jMesaId.setText("" + idMesa);
+    }
+
+    public void obtenerMesero() {
+
+        String nombre = jNombreMesero.getText();
+
+        MeseroData m = new MeseroData(conexion);
+        listaMesero = (ArrayList) m.obtenerMesero(nombre);
+
+        for (Mesero me : listaMesero) {
+            idMesero = me.getId_mesero();
+            // System.out.println("el id del mesero es: " + me.getId_mesero());
+        }
+
+    }
+
+    public void mostrarMesas() {
+
+        for (Mesa item : listaMesasLibres) {
+            jMesasLibres.addItem(item.toString());
+        }
+    }
+
+    public void cargarCabeceraReservas() {
+        ArrayList<Object> co = new ArrayList<Object>();
+        co.add("id_reserva");
+        co.add("Nombre cliente");
+        co.add("Fecha y hora");
+
+        for (Object it : co) {
+            modelo.addColumn(it);
+        }
+
+        jMesas.setModel(modelo);
+    }
+
+    public void mostrarMesasLibres() {
+        // borraFilasTabla();
+
+        MesaData md = new MesaData(conexion);
+        listaMesasLibres = (ArrayList) md.obtenerMesasLibres();
+
+        for (Mesa m : listaMesasLibres) {
+            modelo.addRow(new Object[]{m.getNumMesa(), m.getEstado()});
+        }
 
     }
 
@@ -50,10 +143,8 @@ private int idMesa;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jRadioButton1 = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         jLidReserva = new javax.swing.JLabel();
-        jbBuscar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -65,41 +156,42 @@ private int idMesa;
         txtDni = new javax.swing.JTextField();
         txtFecha = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        nroMesa = new javax.swing.JTextField();
         btBorrar = new javax.swing.JButton();
-        btActualizar = new javax.swing.JButton();
-        btBuscar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jtIdReserva = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-
-        jRadioButton1.setText("jRadioButton1");
-
-        setBorder(null);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jMesas = new javax.swing.JTable();
+        jLabel8 = new javax.swing.JLabel();
+        jNombreMesero = new javax.swing.JTextField();
+        jMesasLibres = new javax.swing.JComboBox<>();
+        jMesaId = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtHora = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(251, 250, 219));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLidReserva.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
-        jbBuscar.setFont(new java.awt.Font("Georgia", 3, 14)); // NOI18N
-        jbBuscar.setText("Buscar Mesa");
-        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbBuscarActionPerformed(evt);
-            }
-        });
+        jPanel1.add(jLidReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 88, 70, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Nombre Cliente:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 97, 20));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Dni Cliente:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 72, 20));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setText("Fecha Hora:");
+        jLabel4.setText("Fecha:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 72, 20));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Estado Vigente:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, -1, 20));
 
         rbtnActiva.setText("Activa");
         rbtnActiva.addActionListener(new java.awt.event.ActionListener() {
@@ -107,6 +199,7 @@ private int idMesa;
                 rbtnActivaActionPerformed(evt);
             }
         });
+        jPanel1.add(rbtnActiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 63, -1));
 
         rbtnInactiva.setText("Inactiva");
         rbtnInactiva.addActionListener(new java.awt.event.ActionListener() {
@@ -114,190 +207,125 @@ private int idMesa;
                 rbtnInactivaActionPerformed(evt);
             }
         });
+        jPanel1.add(rbtnInactiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 340, -1, -1));
 
-        btGuardar.setFont(new java.awt.Font("Georgia", 3, 14)); // NOI18N
+        btGuardar.setFont(new java.awt.Font("Georgia", 3, 12)); // NOI18N
         btGuardar.setText("Guardar");
         btGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btGuardarActionPerformed(evt);
             }
         });
+        jPanel1.add(btGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, 100, -1));
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
             }
         });
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 101, -1));
 
         txtDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDniActionPerformed(evt);
             }
         });
+        jPanel1.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 101, -1));
 
+        txtFecha.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFechaFocusGained(evt);
+            }
+        });
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFechaActionPerformed(evt);
             }
         });
+        jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, 101, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Numero de Mesa:");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 97, -1));
 
         btBorrar.setFont(new java.awt.Font("Georgia", 3, 12)); // NOI18N
-        btBorrar.setText("Borrar");
+        btBorrar.setText("Anular Reserva");
         btBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBorrarActionPerformed(evt);
             }
         });
+        jPanel1.add(btBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 150, -1));
 
-        btActualizar.setFont(new java.awt.Font("Georgia", 3, 12)); // NOI18N
-        btActualizar.setText("Actualizar");
-        btActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btActualizarActionPerformed(evt);
-            }
-        });
-
-        btBuscar.setFont(new java.awt.Font("Georgia", 3, 12)); // NOI18N
-        btBuscar.setText("Buscar");
-        btBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBuscarActionPerformed(evt);
-            }
-        });
-
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("ID Reserva:");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
 
         jtIdReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtIdReservaActionPerformed(evt);
             }
         });
+        jPanel1.add(jtIdReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 101, -1));
 
-        jLabel1.setFont(new java.awt.Font("Georgia", 3, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Georgia", 3, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(153, 0, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Reserva");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(198, 11, 222, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLidReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(rbtnActiva, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(rbtnInactiva))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jtIdReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(87, 87, 87)
-                                    .addComponent(jbBuscar)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btGuardar)
-                        .addGap(57, 57, 57)
-                        .addComponent(btBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53)
-                        .addComponent(btActualizar)
-                        .addGap(51, 51, 51)
-                        .addComponent(btBuscar)))
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLidReserva)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jtIdReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbBuscar))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(nroMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(rbtnActiva)
-                    .addComponent(rbtnInactiva))
-                .addGap(35, 35, 35)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btGuardar)
-                    .addComponent(btBorrar)
-                    .addComponent(btBuscar)
-                    .addComponent(btActualizar))
-                .addGap(10, 10, 10))
-        );
+        jMesas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jMesas);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 310, 280));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("Nombre Mesero");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 97, -1));
+
+        jNombreMesero.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jPanel1.add(jNombreMesero, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 100, 101, -1));
+
+        jMesasLibres.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        jPanel1.add(jMesasLibres, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 320, -1));
+        jPanel1.add(jMesaId, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 100, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setText("Hora:");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, 20));
+        jPanel1.add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 100, -1));
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Lista de reservas");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 310, -1));
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Lista para ver mesas libres");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 40, 180, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
-        String numero;
-        numero = JOptionPane.showInputDialog(null,"Ingrese Numero de Mesa a Buscar");
-        int num=Integer.parseInt(numero);
-        mesa=reservaData.buscarMesa(num);
-        nroMesa.setText(mesa.getNumMesa()+"");
-        idMesa=mesa.getIdMesa();
-    }//GEN-LAST:event_jbBuscarActionPerformed
 
     private void rbtnActivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnActivaActionPerformed
         rbtnInactiva.setSelected(false);// TODO add your handling code here:
@@ -308,25 +336,38 @@ private int idMesa;
     }//GEN-LAST:event_rbtnInactivaActionPerformed
 
     private void btGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuardarActionPerformed
+
         boolean estado;
-        String nombreCliente=txtNombre.getText();
-        int dniCliente=Integer.parseInt(txtDni.getText());
-        LocalDate fechaHora = LocalDate.parse(txtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        if(rbtnActiva.isSelected()){
-            estado=true;
-        }else{estado=false;}
 
-        Reserva reserva =new Reserva(idMesa, nombreCliente, dniCliente, fechaHora, estado);
-        JOptionPane.showMessageDialog(null, "La reserva se guardo correctamente!");
-        reservaData.guardarReserva(reserva);
-        txtNombre.setText(null);
-        txtDni.setText(null);
-        txtFecha.setText(null);
-        idMesa=0;
-        rbtnActiva.setSelected(false);
-        rbtnInactiva.setSelected(false);
- 
+        idMesa = Integer.parseInt(jMesaId.getText());
 
+        String nombreCliente = txtNombre.getText();
+
+        int dniCliente = Integer.parseInt(txtDni.getText());
+
+        String fecha = txtFecha.getText();
+
+        LocalDate ld = LocalDate.parse(fecha);
+
+        String hora = txtHora.getText();
+
+        LocalTime lt = LocalTime.parse(hora);
+
+        LocalDateTime fechaHora = LocalDateTime.of(ld, lt);
+
+        if (rbtnActiva.isSelected()) {
+            estado = true;
+        } else {
+            estado = false;
+        }
+
+        Reserva reserva = new Reserva(idMesa, nombreCliente, dniCliente, fechaHora, estado);
+
+        reservaData.guardarReserva(idMesa, nombreCliente, dniCliente, fechaHora, estado);
+
+        System.out.println("Reserva guardada con exito");
+
+        limpiar();
     }//GEN-LAST:event_btGuardarActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
@@ -337,53 +378,19 @@ private int idMesa;
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDniActionPerformed
 
+    private void txtFechaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFechaFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaFocusGained
+
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaActionPerformed
 
-    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-     
-        int idReserva=Integer.parseInt(jtIdReserva.getText());
-        Reserva reserva=reservaData.buscarReserva(idReserva);
-        if(reserva!=null){
-            int dni = reserva.getDniCliente();
-            boolean estado;
-                jtIdReserva.setText(reserva.getIdReserva()+"");
-                txtNombre.setText(reserva.getNombreCliente());
-                txtDni.setText(""+dni);
-                txtFecha.setText(reserva.getFechaHora().toString());
-                //nroMesa.setText();
-                if(reserva.getEstadoVigente()){
-                    rbtnActiva.setSelected(true);
-                }else{rbtnInactiva.setSelected(false);}
-    }//GEN-LAST:event_btBuscarActionPerformed
-    }
-    
-    private void btActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btActualizarActionPerformed
-      
-        if (jtIdReserva.getText()!=null){
-            boolean estado;
-            String nombreCliente=txtNombre.getText();
-            int dniCliente=Integer.parseInt(txtDni.getText());
-            LocalDate fechaHora = LocalDate.parse(txtFecha.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            if(rbtnActiva.isSelected()){
-                estado=true;
-            }else{estado=false;}
-            int idMesa=mesa.getIdMesa();
-            Reserva reser=new Reserva(idMesa,nombreCliente,dniCliente,fechaHora,estado);
-            reservaData.actualizarReserva(reser);
-    }//GEN-LAST:event_btActualizarActionPerformed
-    }
-    
-    
     private void btBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBorrarActionPerformed
-    try {
-        int idReserva=Integer.parseInt(jtIdReserva.getText());
+        int idReserva = Integer.parseInt(jtIdReserva.getText());
         reservaData.borrarReserva(idReserva);
-    } catch (ClassNotFoundException ex) {
-        Logger.getLogger(VistaReserva.class.getName()).log(Level.SEVERE, null, ex);
-    }
-             
+
+        limpiar();
     }//GEN-LAST:event_btBorrarActionPerformed
 
     private void jtIdReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtIdReservaActionPerformed
@@ -392,27 +399,32 @@ private int idMesa;
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btActualizar;
     private javax.swing.JButton btBorrar;
-    private javax.swing.JButton btBuscar;
     private javax.swing.JButton btGuardar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLidReserva;
+    private javax.swing.JTextField jMesaId;
+    private javax.swing.JTable jMesas;
+    private javax.swing.JComboBox<String> jMesasLibres;
+    private javax.swing.JTextField jNombreMesero;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JButton jbBuscar;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jtIdReserva;
-    private javax.swing.JTextField nroMesa;
     private javax.swing.JRadioButton rbtnActiva;
     private javax.swing.JRadioButton rbtnInactiva;
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

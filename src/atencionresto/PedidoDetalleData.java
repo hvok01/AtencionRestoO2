@@ -45,4 +45,6 @@ public class PedidoDetalleData {
             Logger.getLogger(MeseroData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
 }

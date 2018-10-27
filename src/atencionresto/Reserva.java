@@ -5,7 +5,7 @@
  */
 package atencionresto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -13,14 +13,14 @@ import java.time.LocalDate;
  */
 public class Reserva {
     
-   private int idReserva;
+    private int idReserva;
     private int idMesa;
     private String nombreCliente;
     private int dniCliente;
-    private LocalDate fechaHora;
+    private LocalDateTime fechaHora;
     private boolean estadoVigente;
 
-    public Reserva(int idReserva, int idMesa, String nombreCliente, int dniCliente, LocalDate fechaHora, boolean estadoVigente) {
+    public Reserva(int idReserva, int idMesa, String nombreCliente, int dniCliente, LocalDateTime fechaHora, boolean estadoVigente) {
         this.idReserva = idReserva;
         this.idMesa = idMesa;
         this.nombreCliente = nombreCliente;
@@ -29,7 +29,7 @@ public class Reserva {
         this.estadoVigente = estadoVigente;
     }
 
-    public Reserva(int idMesa, String nombreCliente, int dniCliente, LocalDate fechaHora, boolean estadoVigente) {
+    public Reserva(int idMesa, String nombreCliente, int dniCliente, LocalDateTime fechaHora, boolean estadoVigente) {
         this.idMesa = idMesa;
         this.nombreCliente = nombreCliente;
         this.dniCliente = dniCliente;
@@ -72,11 +72,11 @@ public class Reserva {
         this.dniCliente = dniCliente;
     }
 
-    public LocalDate getFechaHora() {
+    public LocalDateTime getFechaHora() {
         return fechaHora;
     }
 
-    public void setFechaHora(LocalDate fechaHora) {
+    public void setFechaHora(LocalDateTime fechaHora) {
         this.fechaHora = fechaHora;
     }
 

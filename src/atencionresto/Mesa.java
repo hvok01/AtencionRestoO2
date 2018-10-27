@@ -58,8 +58,17 @@ public class Mesa {
         return estado;
     }
 
-    public void setestado(String estado) {
+    public String getEstado() {
+        return estado;
+    }
+    
+    public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "" + numMesa ;
     }
 
     

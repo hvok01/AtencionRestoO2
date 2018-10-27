@@ -15,9 +15,15 @@ import javax.swing.JOptionPane;
 
 public class MeseroData {
     private Connection connection = null;
+     private Conexion conexion;
     
-    public MeseroData (Conexion conexion) throws ClassNotFoundException {
-        connection = conexion.getConexion();
+    public MeseroData (Conexion conexion) {
+        try {
+             this.conexion=conexion;
+             connection = conexion.getConexion();
+         } catch (ClassNotFoundException ex) {
+             Logger.getLogger(ProductoData.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
     
     public void guardarMesero (Mesero mesero) {
@@ -82,22 +88,22 @@ public class MeseroData {
 
     }
     
-        public List<Mesero> obtenerAlumnos(){
+        public List<Mesero> obtenerMesero(String nombre){
         List<Mesero> meseros = new ArrayList<Mesero>();
             
 
         try {
-            String sql = "SELECT * FROM mesero;";
+            String sql = "SELECT nombre_mesero, id_mesero FROM mesero WHERE nombre_mesero = ( ? );";
+            
             PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, nombre);
             ResultSet resultSet = statement.executeQuery();
             Mesero mesero;
             while(resultSet.next()){
                 mesero= new Mesero();
-                mesero.setId_mesero(resultSet.getInt("id"));
-                mesero.setNombre_mesero(resultSet.getString("nombre"));
-              mesero.setDni_mesero(resultSet.getInt("dni"));
-              mesero.setEstado(resultSet.getBoolean(0));
-
+                mesero.setId_mesero(resultSet.getInt("id_mesero"));
+                mesero.setNombre_mesero(resultSet.getString("nombre_mesero"));
+                
                 meseros.add(mesero);
             }      
             statement.close();

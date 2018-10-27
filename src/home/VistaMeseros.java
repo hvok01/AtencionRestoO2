@@ -1,23 +1,100 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package home;
 
-/**
- *
- * @author Usuario
- */
-public class VistaMeseros extends javax.swing.JInternalFrame {
+import atencionresto.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
-    /**
-     * Creates new form VistaMeseros
-     */
+
+public class VistaMeseros extends javax.swing.JInternalFrame {
+    private DefaultTableModel modelo;
+    private DefaultTableModel m;
+    private Conexion conexion;
+    private ArrayList<Pedido> pedidosEntreFechas;
+    private ArrayList<Pedido> mostrarTotal;
+    private PedidoData pedidoData;
+    private ArrayList<Mesero> listaMesero;
+    public int idMesero;
+    
+    
     public VistaMeseros() {
         initComponents();
+        
+        try {
+            conexion = new Conexion("jdbc:mysql://localhost/resto", "root", "");
+
+            modelo = new DefaultTableModel();
+            
+            m = new DefaultTableModel();
+            
+            
+            cargarCabeceraRegistros();
+            cargarCabeceraTotal();
+            
+        } catch (Exception e) {
+        }
     }
 
+    public void obtenerMesero() {
+
+        String nombre = jTextoNombre.getText();
+
+        MeseroData m = new MeseroData(conexion);
+        listaMesero = (ArrayList) m.obtenerMesero(nombre);
+
+        for (Mesero me : listaMesero) {
+            idMesero = me.getId_mesero();
+            // System.out.println("el id del mesero es: " + me.getId_mesero());
+        }
+
+    }
+    
+    public void cargarCabeceraRegistros() {
+        ArrayList<Object> co = new ArrayList<Object>();
+        co.add("id del pedido");
+        co.add("Fecha y hora");
+
+        for (Object it : co) {
+            modelo.addColumn(it);
+        }
+
+        jTablaRegistros.setModel(modelo);
+    }
+    
+    public void cargarCabeceraTotal() {
+        ArrayList<Object> c = new ArrayList<Object>();
+        c.add("Total: ");
+
+        for (Object it : c) {
+            m.addColumn(it);
+        }
+
+        jTablaTotal.setModel(m);
+    }
+    
+    public void borraFilasTabla() {
+
+        int a = modelo.getRowCount() - 1;
+
+        for (int i = a; i >= 0; i--) {
+
+            modelo.removeRow(i);
+        }
+    }
+    
+    public void borraFilasTablaDos() {
+
+        int a = m.getRowCount() - 1;
+
+        for (int i = a; i >= 0; i--) {
+
+            m.removeRow(i);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,30 +105,149 @@ public class VistaMeseros extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jEtiqueta4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTablaRegistros = new javax.swing.JTable();
+        jEtiqueta1 = new javax.swing.JLabel();
+        jEtiqueta2 = new javax.swing.JLabel();
+        jTextoNombre = new javax.swing.JTextField();
+        jEtiqueta3 = new javax.swing.JLabel();
+        jTextoFecha = new javax.swing.JTextField();
+        jBotonBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTablaTotal = new javax.swing.JTable();
+        jTextoIngresos = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jBotonIngresos = new javax.swing.JButton();
 
         setBorder(null);
 
         jPanel1.setBackground(new java.awt.Color(251, 250, 219));
 
+        jEtiqueta4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jEtiqueta4.setText("Vista para gestionar meseros");
+
+        jTablaRegistros.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jTablaRegistros);
+
+        jEtiqueta1.setText("Para buscar pedidos cobrados en el dia:");
+
+        jEtiqueta2.setText("Nombre mesero:");
+
+        jTextoNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextoNombreActionPerformed(evt);
+            }
+        });
+
+        jEtiqueta3.setText("Fecha");
+
+        jBotonBuscar.setText("Buscar Pedidos");
+        jBotonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotonBuscarActionPerformed(evt);
+            }
+        });
+
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Vista para gestionar meseros");
+        jLabel1.setText("Ingresos totales en una fecha");
+
+        jTablaTotal.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(jTablaTotal);
+
+        jLabel2.setText("Fecha");
+
+        jBotonIngresos.setText("Buscar Ingresos");
+        jBotonIngresos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBotonIngresosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addComponent(jEtiqueta4, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jEtiqueta1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(jEtiqueta2)
+                            .addComponent(jEtiqueta3)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jBotonBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                .addComponent(jTextoFecha, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextoNombre, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(79, 79, 79)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextoIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                                .addComponent(jBotonIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(458, Short.MAX_VALUE))
+                .addComponent(jEtiqueta4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jEtiqueta1)
+                    .addComponent(jLabel1))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jEtiqueta2)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextoIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBotonIngresos))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jEtiqueta3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBotonBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(66, 66, 66))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -68,9 +264,98 @@ public class VistaMeseros extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBotonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotonBuscarActionPerformed
+        // TODO add your handling code here:
+        borraFilasTabla();
+        //Busca el id del mesero;
+        String nombre = jTextoNombre.getText();
+
+        MeseroData m = new MeseroData(conexion);
+        listaMesero = (ArrayList) m.obtenerMesero(nombre);
+
+        for (Mesero me : listaMesero) {
+            idMesero = me.getId_mesero();
+         // System.out.println("el id del mesero es: " + me.getId_mesero());
+        }
+        
+        String dia = jTextoFecha.getText();
+        
+        LocalDate ld = LocalDate.parse(dia);
+        
+        String horaUno = "00:00:01";
+        
+        LocalTime lt = LocalTime.parse(horaUno);
+        
+        String horaDos = "23:59:59";
+        
+        LocalTime ltDos = LocalTime.parse(horaDos);
+        
+        LocalDateTime fechaHoraUno = LocalDateTime.of(ld, lt);
+        
+        LocalDateTime fechaHoraDos = LocalDateTime.of(ld, ltDos);
+        
+        System.out.println(fechaHoraUno + " " + fechaHoraDos);
+        
+        System.out.println(idMesero);
+        
+        PedidoData pd = new PedidoData(conexion);
+        pedidosEntreFechas = (ArrayList) pd.obtenerPedidosEntreFechas(idMesero, fechaHoraUno, fechaHoraDos);
+        
+        for (Pedido p : pedidosEntreFechas) {
+            modelo.addRow(new Object[] {p.getId_pedido(),p.getFechaHora_pedido()});
+        }
+        
+    }//GEN-LAST:event_jBotonBuscarActionPerformed
+
+    private void jTextoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextoNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextoNombreActionPerformed
+
+    private void jBotonIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBotonIngresosActionPerformed
+        // TODO add your handling code here:
+        borraFilasTablaDos();
+        
+        String dia = jTextoIngresos.getText();
+        
+        LocalDate ld = LocalDate.parse(dia);
+        
+        String horaUno = "00:00:01";
+        
+        LocalTime lt = LocalTime.parse(horaUno);
+        
+        String horaDos = "23:59:59";
+        
+        LocalTime ltDos = LocalTime.parse(horaDos);
+        
+        LocalDateTime fechaHoraUno = LocalDateTime.of(ld, lt);
+        
+        LocalDateTime fechaHoraDos = LocalDateTime.of(ld, ltDos);
+        
+        PedidoData pd = new PedidoData(conexion);
+        mostrarTotal = (ArrayList) pd.mostrarTotal(fechaHoraUno, fechaHoraDos);
+        
+        for (Pedido p : mostrarTotal) {
+            m.addRow(new Object[] {p.getTotal()});
+        }
+    }//GEN-LAST:event_jBotonIngresosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBotonBuscar;
+    private javax.swing.JButton jBotonIngresos;
+    private javax.swing.JLabel jEtiqueta1;
+    private javax.swing.JLabel jEtiqueta2;
+    private javax.swing.JLabel jEtiqueta3;
+    private javax.swing.JLabel jEtiqueta4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTablaRegistros;
+    private javax.swing.JTable jTablaTotal;
+    private javax.swing.JTextField jTextoFecha;
+    private javax.swing.JTextField jTextoIngresos;
+    private javax.swing.JTextField jTextoNombre;
     // End of variables declaration//GEN-END:variables
 }
